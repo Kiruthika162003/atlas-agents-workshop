@@ -7,3 +7,7 @@ __pycache__/
 slides/
 # the second session has its own repository
 atlas-on-cloud-run/
+# the guide is published as a PDF only; its source stays local
+guide/*.html
+guide/img/
+guide/make_pdf.py
