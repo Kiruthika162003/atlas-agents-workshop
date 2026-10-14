@@ -85,8 +85,9 @@ root_agent = Agent(
         "listing. Make the same two calls for it as in step 5, walking_route "
         "and the description agent, and reply with the single word: done. Do not "
         "search again.\n\n"
-        "If a request matches one of your skills, such as a walking tour, "
-        "load that skill and follow it in place of steps 3 to 6.\n\n"
+        "For a walking tour, an itinerary or how to spend an hour, call "
+        "load_skill for walking-tour in your first step, together with "
+        "geocode, and follow it in place of steps 3 to 6.\n\n"
         "Never make up a place, an address or coordinates. Only use what "
         "the tools return."
     ),

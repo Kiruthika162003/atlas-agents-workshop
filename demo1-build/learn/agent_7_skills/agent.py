@@ -33,8 +33,8 @@ root_agent = Agent(
         "Recommend the three most interesting results with their distance, "
         "in under 80 words. Only name places the tools returned, and say "
         "nothing about them that the tools did not.\n"
-        "If a request matches one of your skills, load that skill and "
-        "follow it exactly."
+        "If a request matches one of your skills, load that skill in your "
+        "first step, together with geocode, and follow it exactly."
     ),
     tools=[places, skills],
 )
