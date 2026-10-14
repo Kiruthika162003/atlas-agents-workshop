@@ -1,0 +1,3 @@
+mcp
+requests
+google-auth
