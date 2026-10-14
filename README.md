@@ -1,14 +1,12 @@
 # Atlas agents workshop
 
-Two sessions, one app. In the first we build Atlas, a map agent that finds
-places near you, describes them from checked sources, and draws the walk to
-each one. In the second we put it in a container, run it on Cloud Run, and
-watch it scale.
+Connect, communicate and extend your agents. We build Atlas, a map agent that
+finds places near you, describes them from checked sources, and draws the walk
+to each one. One step at a time: an agent, tools, MCP, MCP auth, A2A and
+skills.
 
-| session | folder | you leave with |
-|---|---|---|
-| Connect, communicate and extend your agents | [demo1-build](demo1-build) | an agent with tools, an MCP server with a login, a second agent over A2A, a skill, and a map in front of them |
-| Auto-scale your AI agent on Cloud Run | [demo2-deploy](demo2-deploy) | the same app in Docker, on Cloud Run, autoscaling, with chats stored in Firestore |
+You leave with an agent that has tools, an MCP server with a login, a second
+agent over A2A, a skill, and a map in front of them.
 
 ## Start here
 
@@ -39,13 +37,7 @@ demo1-build/
   check.py             tests your setup and says what to fix
   start.py             runs the whole app, on Gemini or on a local Gemma
 
-demo2-deploy/
-  atlas/ mcp_server/ description_agent/ skills/    the app from demo 1, with three small changes
-  Dockerfile  serve.sh                             the container
-  loadtest.py                                      20 users at once, from your laptop
-
 guide/     the attendee guide (PDF, and the HTML it is built from)
-slides/    the decks for both sessions, and the scripts that build them
 ```
 
 ## What you need
@@ -53,24 +45,22 @@ slides/    the decks for both sessions, and the scripts that build them
 - Python 3.11 or newer
 - Git
 - A Google Cloud project with billing on, and the `gcloud` CLI signed in
-- Docker Desktop, for the second session
-- Optional: [Ollama](https://ollama.com) and a graphics card, to run the first
-  session on a local Gemma model with no cloud account
+- Optional: [Ollama](https://ollama.com) and a graphics card, to run it on a
+  local Gemma model with no cloud account
 
-## Rebuilding the guide and the slides
+## Next: put it in production
+
+The second session takes this same app to Cloud Run: a container, a private
+deploy, autoscaling, a load test, and chats stored in Firestore. It has its
+own repository and guide:
+[atlas-on-cloud-run](https://github.com/Kiruthika162003/atlas-on-cloud-run).
+
+## Rebuilding the guide
 
 ```
-pip install playwright python-pptx
+pip install playwright
 ```
 
 ```
 python guide/make_pdf.py
-```
-
-```
-python slides/morning.py
-```
-
-```
-python slides/afternoon.py
 ```

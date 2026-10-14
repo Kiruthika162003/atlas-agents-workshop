@@ -4,5 +4,6 @@ __pycache__/
 *.pyc
 .adk/
 ~$*
-# earlier drafts of the decks
-slides/Atlas-*.pptx
+slides/
+# the second session has its own repository
+atlas-on-cloud-run/

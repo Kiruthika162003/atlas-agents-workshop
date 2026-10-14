@@ -1,7 +1,0 @@
-google-adk[a2a]
-google-cloud-firestore
-flask
-gunicorn
-mcp
-requests
-python-dotenv
