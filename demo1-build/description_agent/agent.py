@@ -62,13 +62,40 @@ def _words(name: str) -> set:
     return set(re.findall(r"\w+", plain)) - {"the", "of", "and", "a", "de", "la", "le", "du"}
 
 
+# Descriptions already written, so a place asked about twice comes back at once
+# instead of being searched again. Follow-up questions are always researched.
+remembered = {}
+
+
+def _asked(callback_context) -> str:
+    """The request as one key: the place name, or the whole text when it holds a question."""
+    asked = callback_context.user_content
+    text = " ".join(part.text or "" for part in asked.parts) if asked and asked.parts else ""
+    text = " ".join(text.lower().split())
+    return text if "?" in text else text.split(",")[0]
+
+
+def answer_from_memory(callback_context):
+    """Skip the search when this place has been described already."""
+    known = remembered.get(_asked(callback_context))
+    return types.Content(role="model", parts=[types.Part(text=known)]) if known else None
+
+
+def remember(callback_context, llm_response):
+    """Keep a finished description, not a step where the model asks for a tool."""
+    parts = llm_response.content.parts if llm_response.content else []
+    text = "".join(part.text or "" for part in parts)
+    if text.strip() and not any(part.function_call for part in parts):
+        remembered[_asked(callback_context)] = text
+
+
 def add_sources(callback_context, llm_response):
     """List the pages Google Search used under the description, so readers can check it."""
     grounding = llm_response.grounding_metadata
-    if not (grounding and grounding.grounding_chunks and llm_response.content):
-        return None
-    pages = [f"{chunk.web.title} {chunk.web.uri}" for chunk in grounding.grounding_chunks[:3] if chunk.web]
-    llm_response.content.parts.append(types.Part(text="\nSources:\n" + "\n".join(pages)))
+    if grounding and grounding.grounding_chunks and llm_response.content:
+        pages = [f"{chunk.web.title} {chunk.web.uri}" for chunk in grounding.grounding_chunks[:3] if chunk.web]
+        llm_response.content.parts.append(types.Part(text="\nSources:\n" + "\n".join(pages)))
+    remember(callback_context, llm_response)
     return llm_response
 
 
@@ -87,7 +114,7 @@ if MODEL.startswith("gemini"):
 else:
     # A local model has no built-in search. Its tool is look_up, the plain
     # Python function above, which reads Wikipedia.
-    brain = dict(model=MODEL, tools=[look_up])
+    brain = dict(model=MODEL, tools=[look_up], after_model_callback=remember)
 
 root_agent = Agent(
     name="description_agent",
@@ -98,10 +125,9 @@ root_agent = Agent(
         "coordinates. Always check the place with your tool first. What "
         "you write next depends on the request.\n\n"
         "A listing on its own: describe the place for someone deciding "
-        "whether to walk there, in three or four sentences of plain text:\n"
-        "- what it is, and what it serves, shows or teaches\n"
-        "- what it is known for: a signature dish, a collection, an award, "
-        "a piece of history\n"
+        "whether to walk there, in two or three short sentences of plain text:\n"
+        "- what it is, and what it is known for: a signature dish, a "
+        "collection, an award, a piece of history\n"
         "- one practical tip for a visitor\n\n"
         "A listing followed by a question, such as what it serves or "
         "whether it suits an allergy or a diet: answer only that question, "
@@ -113,6 +139,7 @@ root_agent = Agent(
         "sentences from the listing alone and say that little is published "
         "about it. Never guess dishes, dates, prices, awards or people."
     ),
+    before_agent_callback=answer_from_memory,
     **brain,
 )
 
