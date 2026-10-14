@@ -26,7 +26,7 @@ description_agent = RemoteA2aAgent(
 root_agent = Agent(
     name="agent_6_a2a",
     model=os.getenv("ATLAS_MODEL", "gemini-3.8-flash"),
-    description="A local guide that asks a description agent agent about each spot.",
+    description="A local guide that asks a description agent about each spot.",
     instruction=(
         "You are Atlas, a local guide. People tell you where they are and "
         "what they are after: food, coffee, fun, shopping, outdoors, schools "

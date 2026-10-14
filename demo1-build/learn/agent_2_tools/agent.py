@@ -15,24 +15,6 @@ load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..",
 # OpenStreetMap's search service. Free, worldwide, no key. It asks for a
 # User-Agent and at most one request a second.
 NOMINATIM = "https://nominatim.openstreetmap.org/search"
-# OpenStreetMap's search service. Free, worldwide, no key. It asks for a
-# User-Agent and at most one request a second.
-NOMINATIM = "https://nominatim.openstreetmap.org/search"
-# OpenStreetMap's search service. Free, worldwide, no key. It asks for a
-# User-Agent and at most one request a second.
-NOMINATIM = "https://nominatim.openstreetmap.org/search"
-# OpenStreetMap's search service. Free, worldwide, no key. It asks for a
-# User-Agent and at most one request a second.
-NOMINATIM = "https://nominatim.openstreetmap.org/search"
-# OpenStreetMap's search service. Free, worldwide, no key. It asks for a
-# User-Agent and at most one request a second.
-NOMINATIM = "https://nominatim.openstreetmap.org/search"
-# OpenStreetMap's search service. Free, worldwide, no key. It asks for a
-# User-Agent and at most one request a second.
-NOMINATIM = "https://nominatim.openstreetmap.org/search"
-# OpenStreetMap's search service. Free, worldwide, no key. It asks for a
-# User-Agent and at most one request a second.
-NOMINATIM = "https://nominatim.openstreetmap.org/search"
 HEADERS = {"User-Agent": "atlas-workshop/1.0", "Accept-Language": "en"}
 # The OpenStreetMap community routing server, walking profile.
 ROUTER = "https://routing.openstreetmap.de/routed-foot/route/v1/foot/"
