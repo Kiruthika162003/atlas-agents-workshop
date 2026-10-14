@@ -1,0 +1,6 @@
+google-adk[a2a]
+flask
+mcp
+litellm
+requests
+python-dotenv

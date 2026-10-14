@@ -1,0 +1,6 @@
+# Gemma 4 with room to read tool results. Ollama's default 4k context is too
+# small once the place list and the tool descriptions are in the prompt.
+# Build once:  ollama create atlas-gemma -f Modelfile
+FROM gemma4:e4b-it-qat
+PARAMETER num_ctx 16384
+PARAMETER temperature 0.3
